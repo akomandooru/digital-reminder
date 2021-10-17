@@ -19,7 +19,7 @@ class App extends React.Component {
       loc: "required|max:16",
       name: "required|max:16",
       time: "required",
-      dur: "required"|integer
+      dur: "required|integer"
     });
 
     this.form.onformsubmit = (fields) => {
