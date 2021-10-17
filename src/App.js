@@ -1,6 +1,6 @@
 import React from "react";
 import ReactFormValidation from "react-form-input-validation";
-import "./Form.css";
+import "./App.css";
 
 class App extends React.Component {
   constructor(props) {
