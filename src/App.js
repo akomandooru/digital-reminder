@@ -12,7 +12,8 @@ class App extends React.Component {
         time: "",
         dur:""
       },
-      errors: {}
+      errors: {},
+      qrcode:""
     };
     this.form = new ReactFormValidation(this, { locale: "en" });
     this.form.useRules({
@@ -24,14 +25,16 @@ class App extends React.Component {
 
     this.form.onformsubmit = (fields) => {
       console.log(fields);
+      this.setState({
+        qrcode:'https://flagpedia.net/data/flags/h80/us.webp'
+      })
     }
-
   }
 
   render() {
     return (
         <div style={{maxWidth: "600px", margin: "0 auto"}}>
-          <h3>React Form Input Validation</h3>
+          <h3>Digital Appointment Reminder</h3>
           <form
             className="myForm"
             noValidate
@@ -123,6 +126,9 @@ class App extends React.Component {
               <button type="submit">Create QR Code</button>
             </p>
           </form>
+          <p>
+            <img src={this.state.qrcode}/>
+          </p>
         </div>
     );
   }
