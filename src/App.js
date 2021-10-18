@@ -17,17 +17,25 @@ class App extends React.Component {
     };
     this.form = new ReactFormValidation(this, { locale: "en" });
     this.form.useRules({
-      loc: "required|max:16",
-      name: "required|max:16",
+      loc: "required|max:32",
+      name: "required|max:32",
       time: "required",
       dur: "required|integer"
     });
 
     this.form.onformsubmit = (fields) => {
-      console.log(fields);
-      this.setState({
-        qrcode:'https://flagpedia.net/data/flags/h80/us.webp'
-      })
+      console.log(JSON.stringify(fields));
+      fetch('/api/appointments',{method:'POST', body:JSON.stringify(fields)})
+      .then(response => { 
+        console.log(response);
+        return response.blob()})
+      .then(image => {
+          console.log(image);
+          // Create a local URL of that image
+          const localUrl = URL.createObjectURL(image);
+          console.log(localUrl);
+          this.setState({qrcode:localUrl});
+      });
     }
   }
 
@@ -64,7 +72,7 @@ class App extends React.Component {
 
             <p>
               <label>
-                Customer Name
+                Event Description
                 <input
                   type="text"
                   name="name"
@@ -72,7 +80,7 @@ class App extends React.Component {
                   onChange={this.form.handleChangeEvent}
                   value={this.state.fields.name}
                   // To override the attribute name
-                  data-attribute-name="Customer Name"
+                  data-attribute-name="Event Description"
                   data-async
                 />
               </label>
@@ -85,7 +93,7 @@ class App extends React.Component {
 
             <p>
               <label>
-                Appointment Time
+                Appointment Time (EST)
                 <input
                   type="datetime-local"
                   name="time"
@@ -103,7 +111,7 @@ class App extends React.Component {
 
             <p>
               <label>
-                Appointment Duration
+                Appointment Duration (min)
                 <input
                   type="text"
                   name="dur"
@@ -126,9 +134,7 @@ class App extends React.Component {
               <button type="submit">Create QR Code</button>
             </p>
           </form>
-          <p>
-            <img src={this.state.qrcode} alt="us flag"/>
-          </p>
+          <img src={this.state.qrcode} alt="qr code" height="30%" width="30%"/>
         </div>
     );
   }
