@@ -127,7 +127,7 @@ class App extends React.Component {
             </p>
           </form>
           <p>
-            <img src={this.state.qrcode}/>
+            <img src={this.state.qrcode} alt="us flag"/>
           </p>
         </div>
     );
